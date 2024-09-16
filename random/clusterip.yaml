@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-deployment
+  labels:
+    app: ubuntu-app
+    alpha: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: backend
+  template:
+    metadata:
+      labels:
+        tier: backend
+    spec:
+      hostname: testpath
+      containers:
+      - name: ubuntu-container
+        image: ubuntu
+        command: ["sh", "-c", "tail -f /dev/null"]
+      restartPolicy: Always
