@@ -1,0 +1,37 @@
+#create new pod called admin-pod with image busybox. 
+#allowed pod to be able to set system time and container should be sleep whithin 3600 second.///
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: admin-pod
+  labels:
+    name: admin-pod
+spec:
+  containers:
+  - name: admin-pod
+    image: busybox
+    securityContext:
+      capabilities:
+        add:
+          - SYS_TIME
+    command: ['sh', '-c']
+    args:
+      - |
+        echo "Current system time: $(date)";
+        # Set the desired system time (replace with your desired date and time)
+        read -p "Enter your Current time: " time
+        date -s "2024-11-05 12:00:00"; 
+        echo "Updated system time: $(date)";
+        # Keep the container running for testing
+        sleep 3600  # Sleep for 1 hour to observe the changes
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+
+
+
+

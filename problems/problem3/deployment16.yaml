@@ -1,0 +1,32 @@
+#Create new deployment called web-proj-268 with image nginx:1.16 and 1 replicas.
+#upgrade the deploymnet version to nginx:1.17 using rolling update.
+#make sure that the version upgrade is recorded the resource annotation. 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-proj-268
+  annotations:
+    app-version: "1.0"                  # custom annotation
+    description: "This deployment runs nginx:1.16" # custom annotation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-proj-268
+  template:
+    metadata:
+      labels:
+        app: web-proj-268
+      annotations:
+        environment: "staging" 
+    spec:
+      containers:
+      - name: web-proj-268
+        image: nginx:1.16
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
