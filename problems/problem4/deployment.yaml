@@ -1,0 +1,28 @@
+#create new deployment called web-003 
+#scale deployment into 3 replicas and make sure desire no of pod is running
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-003
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-003
+  template:
+    metadata:
+      labels:
+        app: web-003
+    spec:
+      containers:
+      - name: web-003-container
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+
+
